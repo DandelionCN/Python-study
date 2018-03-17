@@ -1,0 +1,26 @@
+import pandas as pd
+import numpy as np
+import matplotlib
+from pandas import Series,DataFrame
+
+
+data=pd.read_csv(r'C:\Users\10157624\Desktop\dazu.csv',encoding='utf-8',sep=',')
+data.head()
+
+data.dropna().head() #删除有na的所有行
+
+data.dropna(how='all').head() #删除全部为NA的行
+
+data.dropna(how='all',axis=1).head() #删除全部为NA的列
+
+data_by_month = data.groupby(['month','user','age']).size()
+data_by_month.head()
+
+writer = pd.ExcelWriter(r'E:\data2.xlsx')
+data_by_month.to_excel(writer, sheet_name='Sheet-data1',na_rep='Null',header = True,encoding='utf-8',startrow=0, startcol=0)
+#data_by_month.to_excel(writer, sheet_name='Sheet-data2',na_rep='Null',header = True,encoding='utf-8',startrow=0, startcol=0)
+writer.save()
+writer.close()
+
+
+#data_by_month.to_csv(r'E:\data3.csv',sep=',', na_rep='', float_format=None, columns=None, header=True, index=True, index_label=None, mode='w', )
